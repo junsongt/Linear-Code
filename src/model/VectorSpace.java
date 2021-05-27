@@ -2,37 +2,47 @@ package model;
 
 import java.util.ArrayList;
 
-public class VectorSpace {
+public abstract class VectorSpace {
+    protected int q;
 
-
-    public VectorSpace() {
-
+    public VectorSpace(int q) {
+        this.q = q;
     }
 
 
-    public ArrayList<Integer> addition(ArrayList<Integer> v1, ArrayList<Integer> v2) {
-        ArrayList<Integer> newVector = new ArrayList<>();
+    public Word addition(Word w1, Word w2) {
+        ArrayList<Integer> v1 = w1.getDigits();
+        ArrayList<Integer> v2 = w2.getDigits();
+        String s = "";
         for (int i = 0; i < v1.size(); i++) {
-            newVector.add(v1.get(i) + v2.get(i));
+            Integer e = (v1.get(i) + v2.get(i)) % q;
+            s = s + e.toString();
         }
-        return newVector;
+        return new Word(s);
     }
 
 
-    public ArrayList<Integer> sMultiply(int k, ArrayList<Integer> v) {
-        ArrayList<Integer> newVector = new ArrayList<>();
+    public Word multiply(int k, Word w) {
+        ArrayList<Integer> v = w.getDigits();
+        String s = "";
         for (int i = 0; i < v.size(); i++) {
-            newVector.add(v.get(i) * k);
+            Integer e = (v.get(i) * k) % q;
+            s = s + e.toString();
         }
-        return newVector;
+        return new Word(s);
     }
 
 
-    public int dotProduct(ArrayList<Integer> v1, ArrayList<Integer> v2) {
+
+    public int dotProduct(Word w1, Word w2) {
+        ArrayList<Integer> v1 = w1.getDigits();
+        ArrayList<Integer> v2 = w2.getDigits();
         int result = 0;
         for (int i = 0; i < v1.size(); i++) {
             result  = result + v1.get(i) * v2.get(i);
         }
-        return result;
+        return (result % q);
     }
+
+
 }

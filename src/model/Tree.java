@@ -2,35 +2,32 @@ package model;
 
 import java.util.ArrayList;
 
-public class Branch {
+public class Tree {
     private int value;
-    private ArrayList<Branch> children;
+    private ArrayList<Tree> children;
 
 
-    public Branch(int value) {
+    public Tree(int value) {
         this.value = value;
         this.children = new ArrayList<>();
 
     }
 
 
-
-    public void addBranch(Branch b) {
-        if (!this.children.contains(b)) {
-            this.children.add(b);
+    public void addTree(Tree t) {
+        if (!this.children.contains(t)) {
+            this.children.add(t);
         }
-
     }
 
     public void generateTree(int q, int dim) {
         for (int i = 0; i < q; i++) {
-            Branch b = new Branch(i);
-            addBranch(b);
+            Tree t = new Tree(i);
+            addTree(t);
         }
-
         if (dim >= 3) {
-            for (Branch b : children) {
-                b.generateTree(q, dim - 1);
+            for (Tree t : children) {
+                t.generateTree(q, dim - 1);
             }
         }
     }
@@ -46,7 +43,7 @@ public class Branch {
             rsf.add(nPath);
 
         } else {
-            for (Branch b : this.children) {
+            for (Tree b : this.children) {
                 b.generatePath(rsf, nPath);
             }
         }
